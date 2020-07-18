@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.mail import send_mail
 
 from confirmationemails.models import ConfirmationEmail
@@ -20,7 +21,7 @@ def send_confirmation_email(booking_data):
 
 
 def make_link_element(token):
-    url = 'http://localhost:4200' + '/confirm_booking' + '?token=' + token
+    url = settings.FRONT_END_DOMAIN + '/confirm_booking' + '?token=' + token
     link_element_format = '<a href="{url}">{url}</a>'
     return link_element_format.format(url=url)
 
