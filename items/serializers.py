@@ -10,8 +10,6 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BookedItemSerializer(serializers.ModelSerializer):
-    #item = ItemSerializer(read_only=True)
-    #booking_source = BookingSerializer(read_only=True)
     class Meta:
         model = BookedItem
         fields = '__all__'
