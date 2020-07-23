@@ -26,7 +26,7 @@ def obj_list(request, obj, obj_serializer_class):
 def obj_detail(request, pk, obj, obj_serializer_class):
     try:
         objs = obj.objects.get(pk=pk)
-    except:
+    except obj.DoesNotExist:
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':

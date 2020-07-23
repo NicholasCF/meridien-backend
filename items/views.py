@@ -24,6 +24,15 @@ def item_list(request):
 def item_detail(request, pk):
     return views_template.obj_detail(request, pk, Item, ItemSerializer)
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+@csrf_exempt
+def item_detail_skip_admin(request):
+    if request.method == 'GET':
+        items = Item.objects.all()
+        item_serializer = ItemSerializer(items, many=True)
+        return JsonResponse(item_serializer.data, safe=False)
+
 @api_view(['GET', 'POST', 'DELETE'])
 @permission_classes([IsAuthenticated])
 @csrf_exempt
@@ -36,8 +45,8 @@ def booked_item_list(request):
 def booked_item_detail(request, pk):
     return views_template.obj_detail(request, pk, BookedItem, BookedItemSerializer)
 
-@api_view(['GET', 'DELETE'])
-@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+@permission_classes([AllowAny])
 @csrf_exempt
 def booked_item_from_booking_id(request, booking_id):
     items = BookedItem.objects.filter(booking_source=booking_id)
@@ -45,7 +54,14 @@ def booked_item_from_booking_id(request, booking_id):
     if request.method == 'GET':
         booked_item_serializer = BookedItemSerializer(items, many=True)
         return JsonResponse(booked_item_serializer.data, safe=False)
-    elif request.method == 'DELETE':
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+@csrf_exempt
+def delete_booked_item_from_booking_id(request, booking_id):
+    items = BookedItem.objects.filter(booking_source=booking_id)
+    
+    if request.method == 'DELETE':
         items.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
