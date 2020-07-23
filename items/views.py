@@ -25,7 +25,7 @@ def item_detail(request, pk):
     return views_template.obj_detail(request, pk, Item, ItemSerializer)
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+#@permission_classes([AllowAny])
 @csrf_exempt
 def item_detail_skip_admin(request):
     if request.method == 'GET':
@@ -46,7 +46,7 @@ def booked_item_detail(request, pk):
     return views_template.obj_detail(request, pk, BookedItem, BookedItemSerializer)
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
+#@permission_classes([AllowAny])
 @csrf_exempt
 def booked_item_from_booking_id(request, booking_id):
     items = BookedItem.objects.filter(booking_source=booking_id)
