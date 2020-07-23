@@ -24,15 +24,6 @@ def item_list(request):
 def item_detail(request, pk):
     return views_template.obj_detail(request, pk, Item, ItemSerializer)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticatedOrReadOnly])
-@csrf_exempt
-def item_detail_skip_admin(request):
-    if request.method == 'GET':
-        items = Item.objects.all()
-        item_serializer = ItemSerializer(items, many=True)
-        return JsonResponse(item_serializer.data, safe=False)
-
 @api_view(['GET', 'POST', 'DELETE'])
 @permission_classes([IsAuthenticated])
 @csrf_exempt
