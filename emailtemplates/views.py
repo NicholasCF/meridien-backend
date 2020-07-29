@@ -16,7 +16,7 @@ from meridien import views_template
 def email_template_list(request):
     return views_template.obj_list(request, EmailTemplate, EmailtemplateSerializer)
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 @csrf_exempt
 def email_template_detail(request, pk):
