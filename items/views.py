@@ -7,13 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 import sys
 sys.path.append('../')
 from meridien import views_template
 @api_view(['GET', 'POST', 'DELETE'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedOrReadOnly])
 @csrf_exempt
 def item_list(request):
     return views_template.obj_list(request, Item, ItemSerializer)
@@ -37,7 +37,7 @@ def booked_item_detail(request, pk):
     return views_template.obj_detail(request, pk, BookedItem, BookedItemSerializer)
 
 @api_view(['GET', 'DELETE'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedOrReadOnly])
 @csrf_exempt
 def booked_item_from_booking_id(request, booking_id):
     items = BookedItem.objects.filter(booking_source=booking_id)

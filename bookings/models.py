@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 from datetime import date
 
 
@@ -19,10 +19,13 @@ class Booking(models.Model):
         (RETRIEVED, 'Retrieved'),
         (RETURNED, 'Returned')
     ]
+
+    phone_number_validator = RegexValidator(r'(8[1-8][0-9]{6}|9[0-8][0-9]{6})', 'Invalid phone number.')
     
     name = models.CharField(max_length=256, blank=False, default='N/A')
     email = models.EmailField(blank=False, default='N/A')
     organization = models.CharField(max_length=1000, blank=False, default='N/A')
+    phone_no = models.CharField(blank=False, default='00000000', validators=[phone_number_validator], max_length=8)
     reason = models.TextField(blank=False, default='-')
     time_booked = models.DateTimeField(auto_now_add=True)
     loan_start_time = models.DateField(blank=False, default=date.fromtimestamp(0))

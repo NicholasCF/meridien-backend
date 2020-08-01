@@ -29,3 +29,7 @@ CORS_ORIGIN_WHITELIST = (
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Communication settings
+
+FRONT_END_DOMAIN = 'http://localhost:4200'
