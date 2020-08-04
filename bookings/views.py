@@ -10,6 +10,7 @@ from bookings.models import Booking
 from bookings.serializers import BookingSerializer
 from confirmationemails.templates import send_confirmation_email
 from confirmationemails.tokens import decode_token
+from meridien.permissions import IsAuthenticatedOrPostOnly
 
 import sys
 sys.path.append('../')
@@ -17,7 +18,7 @@ from meridien import views_template
 
 
 @api_view(['GET', 'POST', 'DELETE'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedOrPostOnly])
 @csrf_exempt
 def booking_list(request):
     response = views_template.obj_list(request, Booking, BookingSerializer)
