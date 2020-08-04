@@ -16,7 +16,8 @@ def send_confirmation_email(booking_data):
         message='',
         from_email='confirmation@example.com',
         recipient_list=[booking_data['email']],
-        html_message=confirmation_body
+        html_message=confirmation_body,
+        fail_silently=True
     )
 
 
