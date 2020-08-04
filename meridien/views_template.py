@@ -8,7 +8,7 @@ from rest_framework import status
 @csrf_exempt
 def obj_list(request, obj, obj_serializer_class):
     if request.method == 'GET':
-        objs = obj.objects.all()
+        objs = obj.objects.all().order_by('id')
         obj_serializer = obj_serializer_class(objs, many=True)
         return JsonResponse(obj_serializer.data, safe=False)
     elif request.method == 'POST':
