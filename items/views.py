@@ -1,5 +1,6 @@
 from items.models import Item, BookedItem
 from items.serializers import ItemSerializer, BookedItemSerializer
+from meridien.permissions import IsAuthenticatedOrPostOnly
 
 from django.http import HttpResponse
 from django.http.response import JsonResponse
@@ -25,7 +26,7 @@ def item_detail(request, pk):
     return views_template.obj_detail(request, pk, Item, ItemSerializer)
 
 @api_view(['GET', 'POST', 'DELETE'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticatedOrPostOnly])
 @csrf_exempt
 def booked_item_list(request):
     return views_template.obj_list(request, BookedItem, BookedItemSerializer)
